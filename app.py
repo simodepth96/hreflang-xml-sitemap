@@ -1,6 +1,6 @@
 import streamlit as st
-import pandas as pd
 import os
+import pandas as pd
 from datetime import datetime
 
 def generate_hreflang_sitemap(df):
@@ -40,12 +40,12 @@ if file is not None:
 
     # Read the file content
     if file.name.endswith('.xlsx'):
-        df = pd.read_excel(file, sheet_name=None)
+        df = pd.read_excel(file)
     else:
         df = pd.read_csv(file)
 
     # Display file content
-    st.dataframe(df)  # You can change this line based on the file type
+    st.dataframe(df)
 
     # Generate hreflang sitemap on button click
     if st.button("Generate Hreflang Sitemap"):
