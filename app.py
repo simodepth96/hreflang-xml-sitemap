@@ -1,6 +1,6 @@
 import streamlit as st
-import os
 import pandas as pd
+import os
 from datetime import datetime
 
 def generate_hreflang_sitemap(file_path):
@@ -32,6 +32,7 @@ def generate_hreflang_sitemap(file_path):
         f.write(sitemap_footer)
 
     st.success("hreflang XML sitemap generated successfully.")
+    return output_file_path
 
 # Streamlit UI
 st.title("Hreflang XML Sitemap Generator")
@@ -47,4 +48,6 @@ if file is not None:
 
     # Generate hreflang sitemap on button click
     if st.button("Generate Hreflang Sitemap"):
-        generate_hreflang_sitemap(file.name)
+        output_file_path = generate_hreflang_sitemap(file.name)
+        st.success(f"Download your file [here](sandbox:/path/{output_file_path})")
+
