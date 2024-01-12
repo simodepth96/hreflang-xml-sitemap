@@ -33,6 +33,13 @@ def generate_hreflang_sitemap(df):
 # Streamlit UI
 st.title("Hreflang XML Sitemap Generator")
 
+# Introduction
+st.markdown("""
+This Streamlit app generates an hreflang XML sitemap based on the provided XLSX or CSV file. 
+Ensure your file includes columns 'URL', 'Language', and 'Region'. 
+After uploading, the app will display the file's content and allow you to generate and download the hreflang XML sitemap.
+""")
+
 # File upload
 file = st.file_uploader("Upload XLSX or CSV file", type=["xlsx", "csv"])
 
