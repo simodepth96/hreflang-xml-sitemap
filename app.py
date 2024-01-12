@@ -1,6 +1,6 @@
 import streamlit as st
-import os
 import pandas as pd
+import os
 from datetime import datetime
 
 def generate_hreflang_sitemap(df):
@@ -8,8 +8,8 @@ def generate_hreflang_sitemap(df):
     sitemap_header = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
     sitemap_footer = '</urlset>'
 
-    # Save output to a single XML file
-    output_file_path = 'hreflang_sitemap.xml'
+    # Save output to a single TXT file
+    output_file_path = 'hreflang_sitemap.txt'
     with open(output_file_path, 'w', encoding='utf-8') as f:
         f.write(sitemap_header)
 
