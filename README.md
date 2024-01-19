@@ -6,10 +6,43 @@ This app is designed to streamline the generation of XML sitemaps containing hre
 An XLSX or a CSV file with the following properties: 
 
 <li> 
-  URL, Language, Region, X-Default
+  URL
 </li>
+<li>
+  Language
+</li> 
+<li>
+  Region
+</li>
+<li>
+  X-Default
+</li>
+
+
+
+The app allows users to generate an hreflang XML sitemap for websites targeting:
+
+<ul>
+  1. Language and Region
+</ul>
+<ul>
+  2. Only a Language or a Region
+</ul>
+
+### Language and Region - Example Input
+
+
+
+## Changelog v.2
+
+<li>
+  Introduced option to select either Language and Region or only use one of them where values are not <i>none</i>. 
+</li>
+<li>
+  Set x-default version as the specified value in the input file header (i.e. X-Default).
+</li> 
 <li> 
-  Have multiple sheets with a single page template and related list of alternate versions
+  Fixed a few bugs.
 </li> 
 
 ## Changelog v.1
@@ -20,3 +53,5 @@ An XLSX or a CSV file with the following properties:
 <li> 
   Added X-Default column to be read in
 </li> 
+
+Find more at my [SEO Toolstation]([https://seodepths.com/tools-for-seo/)
