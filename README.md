@@ -31,7 +31,11 @@ The app allows users to generate an hreflang XML sitemap for websites targeting:
 
 ### Language and Region - Example Input
 
-
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/simodepth96/hreflang-xml-sitemap/blob/525c5c398833d648ac5581ed9ee27a14eb1d89ad/both.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/simodepth96/hreflang-xml-sitemap/blob/525c5c398833d648ac5581ed9ee27a14eb1d89ad/both.png">
+  <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://github.com/simodepth96/hreflang-xml-sitemap/blob/525c5c398833d648ac5581ed9ee27a14eb1d89ad/both.png">
+</picture>
 
 ## Changelog v.2
 
@@ -44,6 +48,8 @@ The app allows users to generate an hreflang XML sitemap for websites targeting:
 <li> 
   Fixed a few bugs.
 </li> 
+
+
 
 ## Changelog v.1
 
