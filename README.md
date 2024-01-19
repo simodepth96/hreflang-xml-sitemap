@@ -31,11 +31,37 @@ The app allows users to generate an hreflang XML sitemap for websites targeting:
 
 ### Language and Region - Example Input
 
+If your target website targets both a Language and a Region, you're gonna need an input file that looks like the following Excel
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/simodepth96/hreflang-xml-sitemap/blob/e00fe36c874ab990041e89c4eef423e529d89650/both%20input.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/simodepth96/hreflang-xml-sitemap/blob/e00fe36c874ab990041e89c4eef423e529d89650/both%20input.png">
+  <img
+    alt=""
+    src="https://github.com/simodepth96/hreflang-xml-sitemap/blob/e00fe36c874ab990041e89c4eef423e529d89650/both%20input.png"
+    width="800"
+    height="400"
+    style="max-width: 100%; height: auto;">
+</picture>
+
+
+When uploading either the XLSX or the CSV file, you will choose to want to use both Language and Region
+
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/simodepth96/hreflang-xml-sitemap/blob/525c5c398833d648ac5581ed9ee27a14eb1d89ad/both.png">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/simodepth96/hreflang-xml-sitemap/blob/525c5c398833d648ac5581ed9ee27a14eb1d89ad/both.png">
-  <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://github.com/simodepth96/hreflang-xml-sitemap/blob/525c5c398833d648ac5581ed9ee27a14eb1d89ad/both.png">
+  <img alt="" src="https://github.com/simodepth96/hreflang-xml-sitemap/blob/525c5c398833d648ac5581ed9ee27a14eb1d89ad/both.png"
+    width="800"
+    height="400"
+    style="max-width: 100%; height: auto;">
 </picture>
+
+### Only Language or Region - Example Input
+
+If you website only targets a language which is spoken in the same region, then your input file should look like the following
+
+
 
 ## Changelog v.2
 
