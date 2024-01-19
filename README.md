@@ -101,5 +101,5 @@ When uploading either the XLSX or the CSV file, you will select <b>No</b> when a
   Added X-Default column to be read in
 </li> 
 
-Find more at my <a href="https://seodepths.com/tools-for-seo/" target='_blank' rel='noopener'>SEO Toolstation</a>
+Find more at my <a href="https://seodepths.com/tools-for-seo/" target="_blank" rel="noopener">SEO Toolstation</a>
 
