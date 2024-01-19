@@ -19,16 +19,23 @@ def generate_hreflang_sitemap(df, use_language_region):
             today_date = datetime.today().strftime('%Y-%m-%d')
             f.write(f'<url>\n  <loc>{row["URL"]}</loc>\n')
             
-            # Add xhtml:link elements based on user's choice
+            # Add xhtml:link elements based on user choice
             if use_language_region:
-                for _, link_row in df.iterrows():
-                    f.write(f'  <xhtml:link rel="alternate" hreflang="{link_row["Language"]}-{link_row["Region"]}" href="{link_row["URL"]}"/>\n')
+                alternate_values = row[["Language", "Region"]]
             else:
-                # Use 'Language' or 'Region' based on non-"none" values
-                alternate_value = row["Language"] if row["Language"] != "none" else row["Region"]
-                f.write(f'  <xhtml:link rel="alternate" hreflang="{alternate_value}" href="{row["URL"]}"/>\n')
+                alternate_values = row[["Language", "Region"]].apply(lambda x: x if x != "none" else None)
             
-            f.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{row["URL"]}"/>\n  <lastmod>{today_date}</lastmod>\n</url>\n')
+            # Add xhtml:link elements
+            for col, value in alternate_values.items():
+                if value:
+                    f.write(f'  <xhtml:link rel="alternate" hreflang="{value}" href="{row["URL"]}"/>\n')
+            
+            # Add X-Default
+            x_default_value = row["X-Default"]
+            if x_default_value != "none":
+                f.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{x_default_value}"/>\n')
+            
+            f.write(f'  <lastmod>{today_date}</lastmod>\n</url>\n')
 
         f.write(sitemap_footer)
 
@@ -41,7 +48,7 @@ st.title("Hreflang XML Sitemap Generator")
 # Introduction
 st.markdown("""
 This Streamlit app generates an hreflang XML sitemap based on the provided XLSX or CSV file. 
-Ensure your file includes columns 'URL', 'Language', 'Region', and 'X-Default' and has a single URL with alternate versions by tab (i.e. sheet if Excel)
+Ensure your file includes columns 'URL', 'Language', 'Region', and 'X-Default'.
 """)
 
 # File upload
@@ -59,8 +66,8 @@ if file is not None:
     # Display file content
     st.dataframe(df)
 
-    # Ask user whether Language and Region are useful
-    use_language_region = st.radio("Are both Language and Region useful for generating the XML sitemap?", ('Yes', 'No')) == 'Yes'
+    # Checkbox for user choice
+    use_language_region = st.checkbox("Use both Language and Region for alternate versions")
 
     # Generate hreflang sitemap on button click
     if st.button("Generate Hreflang Sitemap"):
