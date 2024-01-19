@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 import base64 
 
-def generate_hreflang_sitemap(df):
+def generate_hreflang_sitemap(df, use_language_region):
     # Define sitemap header and footer
     sitemap_header = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
     sitemap_footer = '</urlset>'
@@ -19,11 +19,16 @@ def generate_hreflang_sitemap(df):
             today_date = datetime.today().strftime('%Y-%m-%d')
             f.write(f'<url>\n  <loc>{row["URL"]}</loc>\n')
             
-            # Add xhtml:link elements
-            for _, link_row in df.iterrows():
-                f.write(f'  <xhtml:link rel="alternate" hreflang="{link_row["Language"]}-{link_row["Region"]}" href="{link_row["URL"]}"/>\n')
+            # Add xhtml:link elements based on user's choice
+            if use_language_region:
+                for _, link_row in df.iterrows():
+                    f.write(f'  <xhtml:link rel="alternate" hreflang="{link_row["Language"]}-{link_row["Region"]}" href="{link_row["URL"]}"/>\n')
+            else:
+                # Use 'Language' or 'Region' based on non-"none" values
+                alternate_value = row["Language"] if row["Language"] != "none" else row["Region"]
+                f.write(f'  <xhtml:link rel="alternate" hreflang="{alternate_value}" href="{row["URL"]}"/>\n')
             
-            f.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{row["X-Default"]}"/>\n  <lastmod>{today_date}</lastmod>\n</url>\n')
+            f.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{row["URL"]}"/>\n  <lastmod>{today_date}</lastmod>\n</url>\n')
 
         f.write(sitemap_footer)
 
@@ -54,9 +59,12 @@ if file is not None:
     # Display file content
     st.dataframe(df)
 
+    # Ask user whether Language and Region are useful
+    use_language_region = st.radio("Are both Language and Region useful for generating the XML sitemap?", ('Yes', 'No')) == 'Yes'
+
     # Generate hreflang sitemap on button click
     if st.button("Generate Hreflang Sitemap"):
-        output_file_path = generate_hreflang_sitemap(df)
+        output_file_path = generate_hreflang_sitemap(df, use_language_region)
 
         # Download link for XML
         st.markdown("### Download XML Sitemap")
