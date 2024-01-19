@@ -28,7 +28,7 @@ def generate_hreflang_sitemap(df, use_both):
 
                 f.write(f'  <xhtml:link rel="alternate" hreflang="{alternate_value}" href="{link_row["URL"]}"/>\n')
 
-            f.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{row["URL"]}"/>\n  <lastmod>{today_date}</lastmod>\n</url>\n')
+            f.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{row["X-Default"]}"/>\n  <lastmod>{today_date}</lastmod>\n</url>\n')
 
         f.write(sitemap_footer)
 
