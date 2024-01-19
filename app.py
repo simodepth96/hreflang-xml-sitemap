@@ -23,7 +23,7 @@ def generate_hreflang_sitemap(df):
             for _, link_row in df.iterrows():
                 f.write(f'  <xhtml:link rel="alternate" hreflang="{link_row["Language"]}-{link_row["Region"]}" href="{link_row["URL"]}"/>\n')
             
-            f.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{row["URL"]}"/>\n  <lastmod>{today_date}</lastmod>\n</url>\n')
+            f.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{row["X-Default"]}"/>\n  <lastmod>{today_date}</lastmod>\n</url>\n')
 
         f.write(sitemap_footer)
 
@@ -36,7 +36,7 @@ st.title("Hreflang XML Sitemap Generator")
 # Introduction
 st.markdown("""
 This Streamlit app generates an hreflang XML sitemap based on the provided XLSX or CSV file. 
-Ensure your file includes columns 'URL', 'Language', and 'Region' and has a single URL with alternate versions by tab (i.e. sheet if Excel)
+Ensure your file includes columns 'URL', 'Language', 'Region', and 'X-Default' and has a single URL with alternate versions by tab (i.e. sheet if Excel)
 """)
 
 # File upload
