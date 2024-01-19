@@ -21,7 +21,11 @@ def generate_hreflang_sitemap(df, use_both):
 
             # Add xhtml:link elements
             for _, link_row in df.iterrows():
-                alternate_value = link_row["Language"] if use_both else link_row["Region"]
+                if use_both:
+                    alternate_value = f'{link_row["Language"]}-{link_row["Region"]}' if link_row["Language"] != "none" and link_row["Region"] != "none" else "x-default"
+                else:
+                    alternate_value = link_row["Language"] if link_row["Language"] != "none" else link_row["Region"]
+
                 f.write(f'  <xhtml:link rel="alternate" hreflang="{alternate_value}" href="{link_row["URL"]}"/>\n')
 
             f.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{row["URL"]}"/>\n  <lastmod>{today_date}</lastmod>\n</url>\n')
