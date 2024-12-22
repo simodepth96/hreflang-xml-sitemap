@@ -45,7 +45,7 @@ st.markdown(
     )
 
 # File Upload
-file = st.file_uploader("Please, upload an XLSX or a CSV file with the following headers: URL, Language, Region, X-Default, type=["xlsx", "csv"])
+file = st.file_uploader("Please, upload an XLSX or a CSV file with the following headers: URL, Language, Region, X-Default", type=["xlsx", "csv"])
 
 if file is not None:
     st.write("File Uploaded Successfully!")
