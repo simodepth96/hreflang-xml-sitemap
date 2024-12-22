@@ -30,7 +30,7 @@ The app allows users to generate an hreflang XML sitemap for websites targeting:
 ### Important
 In case you are targeting a language that merely reflects the region, make sure to leave one of the Language and Region headers as <i><b>none</b></i> in your XLSX/CSV file.
 
-### Language and Region - Example Input
+## Language and Region - Example Input
 
 If your target website targets both a Language and a Region, you're gonna need an input file that looks like the following Excel
 
@@ -54,7 +54,7 @@ When uploading either the XLSX or the CSV file, you will choose to want to use b
     style="max-width: 100%; height: auto;">
 </picture>
 
-### Only Language or Region - Example Input
+## Only Language or Region - Example Input
 
 If your website only targets a language that is spoken in the same region, then your input file should look like the following
 
@@ -76,7 +76,17 @@ When uploading either the XLSX or the CSV file, you will select <b>No</b> when a
     style="max-width: 100%; height: auto;">
 </picture>
 
+## Changelog v.3
 
+<li>
+ Updated dependencies to their latest version (e.g. numpy) and pip-installed altair
+</li>
+<li>
+ Added textual instructions as to the expected dataset before running the app
+</li> 
+<li> 
+  Fixed a few bugs.
+</li> 
 
 ## Changelog v.2
 
