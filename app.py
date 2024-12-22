@@ -39,8 +39,13 @@ def generate_hreflang_sitemap(df, use_both):
 # Streamlit UI
 st.title("Hreflang XML Sitemap Generator")
 
+st.markdown(
+    "This app streamlines bulk hreflang markup implementation on an XML sitemap file for websites serving Language and/or Region based audiences."
+    "In case you are targeting a language that merely reflects the region, make sure to leave one of the Language and Region headers as none in your XLSX/CSV file."
+    )
+
 # File Upload
-file = st.file_uploader("Upload XLSX or CSV file", type=["xlsx", "csv"])
+file = st.file_uploader("Please, upload an XLSX or a CSV file with the following headers: URL, Language, Region, X-Default, type=["xlsx", "csv"])
 
 if file is not None:
     st.write("File Uploaded Successfully!")
