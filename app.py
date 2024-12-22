@@ -1,59 +1,45 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-import os
 import base64
 from io import BytesIO
+
 
 def generate_hreflang_sitemap(df, use_both):
     # Define sitemap header and footer
     sitemap_header = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
     sitemap_footer = '</urlset>'
 
-    # Prepare XML content in memory
-    output = BytesIO()
-    with output as buffer:
-        buffer.write(sitemap_header.encode('utf-8'))
+    # Generate XML in memory
+    buffer = BytesIO()
+    buffer.write(sitemap_header.encode('utf-8'))
 
-        # Process each row
-        for _, row in df.iterrows():
-            today_date = datetime.today().strftime('%Y-%m-%d')
-            buffer.write(f'<url>\n  <loc>{row["URL"]}</loc>\n'.encode('utf-8'))
+    # Process each row
+    for _, row in df.iterrows():
+        today_date = datetime.today().strftime('%Y-%m-%d')
+        buffer.write(f'<url>\n  <loc>{row["URL"]}</loc>\n'.encode('utf-8'))
 
-            # Add xhtml:link elements
-            for _, link_row in df.iterrows():
-                if use_both:
-                    alternate_value = f'{link_row["Language"]}-{link_row["Region"]}' if link_row["Language"] != "none" and link_row["Region"] != "none" else "x-default"
-                else:
-                    alternate_value = link_row["Language"] if link_row["Language"] != "none" else link_row["Region"]
+        # Add alternate links
+        for _, link_row in df.iterrows():
+            if use_both:
+                alternate_value = f'{link_row["Language"]}-{link_row["Region"]}' if link_row["Language"] != "none" and link_row["Region"] != "none" else "x-default"
+            else:
+                alternate_value = link_row["Language"] if link_row["Language"] != "none" else link_row["Region"]
 
-                buffer.write(f'  <xhtml:link rel="alternate" hreflang="{alternate_value}" href="{link_row["URL"]}"/>\n'.encode('utf-8'))
+            buffer.write(f'  <xhtml:link rel="alternate" hreflang="{alternate_value}" href="{link_row["URL"]}"/>\n'.encode('utf-8'))
 
-            buffer.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{row["X-Default"]}"/>\n  <lastmod>{today_date}</lastmod>\n</url>\n'.encode('utf-8'))
+        buffer.write(f'  <xhtml:link rel="alternate" hreflang="x-default" href="{row["X-Default"]}"/>\n  <lastmod>{today_date}</lastmod>\n</url>\n'.encode('utf-8'))
 
-        buffer.write(sitemap_footer.encode('utf-8'))
-        buffer.seek(0)
+    buffer.write(sitemap_footer.encode('utf-8'))
+    buffer.seek(0)  # Reset buffer position
 
-    st.success("Hreflang XML sitemap generated successfully.")
     return buffer
 
 
 # Streamlit UI
 st.title("Hreflang XML Sitemap Generator")
 
-# Introduction
-st.markdown("""
-This Streamlit app generates an hreflang XML sitemap based on the provided **XLSX** or **CSV** file.\n
-Ensure your file includes: \n
-**'URL', 'Language', and 'Region' and 'X-Default'** with a full URL \n
-The app allows users to generate an hreflang XML sitemap for websites targeting:\n
-1. Language and Region \n
-2. Only a Language or a Region \n
-**Important** \n
-In case you are targeting a language that merely reflects the region, make sure to leave one of the Language and Region headers as **none** in your XLSX/CSV file.
-""")
-
-# File upload
+# File Upload
 file = st.file_uploader("Upload XLSX or CSV file", type=["xlsx", "csv"])
 
 if file is not None:
@@ -68,23 +54,16 @@ if file is not None:
     # Display file content
     st.dataframe(df)
 
-    # Ask user choice
+    # User choice
     use_both = st.radio("Do you want to use both Language and Region?", options=["Yes", "No"]) == "Yes"
 
-    # Generate hreflang sitemap on button click
+    # Generate sitemap on button click
     if st.button("Generate Hreflang Sitemap"):
-        output_file_path = generate_hreflang_sitemap(df, use_both)
+        buffer = generate_hreflang_sitemap(df, use_both)
 
-    # Generate a download link
-        with open(output_file_path, 'rb') as f:
-            st.markdown(f'<a href="data:application/xml;base64,{base64.b64encode(f.read()).decode()}" download="hreflang_sitemap.xml">Download hreflang_sitemap.xml</a>', unsafe_allow_html=True)
-            if st.button("Generate Hreflang Sitemap"):
-                buffer = generate_hreflang_sitemap(df, use_both)
-
-    # Provide Download Link
-            st.download_button(
-                label="Download Hreflang Sitemap",
-                data=buffer,
-                file_name="hreflang_sitemap.xml",
-                mime="application/xml"
-            )
+        # Provide download link for XML file
+        st.markdown("### Download XML Sitemap")
+        xml_data = buffer.getvalue()
+        b64 = base64.b64encode(xml_data).decode()  # Encode XML to base64
+        href = f'<a href="data:application/xml;base64,{b64}" download="hreflang_sitemap.xml">Download hreflang_sitemap.xml</a>'
+        st.markdown(href, unsafe_allow_html=True)
