@@ -41,7 +41,6 @@ st.title("Hreflang XML Sitemap Generator")
 
 st.markdown(
     "This app streamlines bulk hreflang markup implementation on an XML sitemap file for websites serving Language and/or Region based audiences."
-    "In case you are targeting a language that merely reflects the region, make sure to leave one of the Language and Region headers as none in your XLSX/CSV file."
     )
 
 # File Upload
